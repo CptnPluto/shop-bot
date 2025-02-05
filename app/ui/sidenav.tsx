@@ -3,7 +3,7 @@ import Link from "next/link";
 // import AcmeLogo from "@/app/ui/acme-logo";
 import { PowerIcon, HomeIcon } from "@heroicons/react/24/outline";
 // import { signOut } from "@/auth";
-import { Button } from "./button";
+// import { Button } from "./button";
 
 export default function SideNav() {
 	return (

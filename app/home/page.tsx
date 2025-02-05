@@ -24,6 +24,8 @@ export default function Page() {
 				<Button className="my-4">
 					<Link href="../">Back</Link>
 				</Button>
+
+			
 			</div>
 		</main>
 	);
