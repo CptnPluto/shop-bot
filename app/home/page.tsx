@@ -2,6 +2,8 @@
 
 import { getAllProducts } from "../lib/actions";
 import { useActionState } from "react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function Page() {
 	const [state, formAction] = useActionState(getAllProducts, null);
@@ -15,10 +17,13 @@ export default function Page() {
 					<li>
 						<form action={formAction}>
 							Get product info
-							<button className="bg-blue-500 rounded-md text-lg p-2">GET</button>
+							<Button>GET</Button>
 						</form>
 					</li>
 				</ol>
+				<Button className="my-4">
+					<Link href="../">Back</Link>
+				</Button>
 			</div>
 		</main>
 	);
