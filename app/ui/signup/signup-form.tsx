@@ -1,9 +1,8 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React from "react";
 import { Button } from "../button";
 import { useActionState } from "react";
-import { getAllProducts, userSignup } from "@/app/lib/actions";
-import { State } from "@/app/lib/actions";
+import { userSignup } from "@/app/lib/actions";
 import clsx from "clsx";
 
 const inputClassnames =
@@ -173,7 +172,7 @@ export default function SignupForm() {
 	const handleNext = (e: any) => {
 		const form = e.currentTarget.closest("form");
 		if (form) {
-			let currentSlide = parseInt(form.dataset.move || "0", 10);
+			const currentSlide = parseInt(form.dataset.move || "0", 10);
 			if (currentSlide < slides.length - 1) {
 				form.dataset.move = (currentSlide + 1).toString();
 				form.style.setProperty("--slide", form.dataset.move);
@@ -184,7 +183,7 @@ export default function SignupForm() {
 	const handlePrevious = (e: any) => {
 		const form = e.currentTarget.closest("form");
 		if (form) {
-			let currentSlide = parseInt(form.dataset.move || "0", 10);
+			const currentSlide = parseInt(form.dataset.move || "0", 10);
 			if (currentSlide > 0) {
 				form.dataset.move = (currentSlide - 1).toString();
 				form.style.setProperty("--slide", form.dataset.move);

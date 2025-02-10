@@ -12,7 +12,7 @@ export default function Page() {
 		<main className="text-2xl">
 			<div>Home Page.</div>
 			<div id="apis">
-				<span>API's</span>
+				<span>API&aposs</span>
 				<ol>
 					<li>
 						<form action={formAction}>
@@ -21,11 +21,10 @@ export default function Page() {
 						</form>
 					</li>
 				</ol>
+				<ol>{state && state.message && <li>{state.message}</li>}</ol>
 				<Button className="my-4">
 					<Link href="../">Back</Link>
 				</Button>
-
-			
 			</div>
 		</main>
 	);

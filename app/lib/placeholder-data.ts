@@ -145,4 +145,4 @@ const customers = [
 // ];
 
 // export { users, customers, invoices, revenue };
-export { users }
+export { users, customers }
