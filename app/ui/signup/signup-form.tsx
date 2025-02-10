@@ -1,91 +1,251 @@
 "use client";
-import { getAllProducts } from "@/app/lib/actions";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { Button } from "../button";
 import { useActionState } from "react";
+import { getAllProducts, userSignup } from "@/app/lib/actions";
+import { State } from "@/app/lib/actions";
+import clsx from "clsx";
 
-function Address() {
-	return (
-		<>
-			<label htmlFor="address">Address</label>
-			<input name="address" type="text" />
-		</>
-	);
+const inputClassnames =
+	"peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500";
+const labelClassnames = "mb-2 block text-sm font-medium";
+
+type UserSignup = {
+	name: string;
+	email: string;
+	address: string;
+	macros: string;
+	nutritionals: string;
+	budget: string;
+	deliveryTime: string;
+	mealPlan: string;
+	password: string;
+	passwordConf: string;
+};
+
+interface FormStepProps {
+	formData: UserSignup;
 }
 
-function Info() {
+export const Address = ({ formData }: FormStepProps) => {
 	return (
-		<>
-			<label htmlFor="name">Name</label>
-			<input name="name" type="Email" />
-
-			<label htmlFor="email">Email</label>
-			<input name="email" type="password" />
-
-			<label htmlFor="address">Password</label>
-			<input name="address" type="text" />
-
-			<label htmlFor="passwordConf">Password Confirmation</label>
-			<input name="passwordConf" type="text" />
-		</>
+		<section>
+			<label className={labelClassnames} htmlFor="address">
+				Address
+			</label>
+			<input
+				className={inputClassnames}
+				name="address"
+				type="text"
+				value={formData?.address}
+			/>
+		</section>
 	);
-}
+};
 
-function Budget() {
+export const Info = ({ formData }: FormStepProps) => {
 	return (
-		<>
-			<label htmlFor="budget">Enter budget</label>
-			<input name="budget" type="text" />
-		</>
-	);
-}
+		<section>
+			<label className={labelClassnames} htmlFor="name">
+				Name
+			</label>
+			<input className={inputClassnames} name="name" type="text" value={formData?.name} />
 
-function DeliveryTime() {
-	return (
-		<>
-			<label htmlFor="delivery-time">Desired delivery time</label>
-			<input name="delivery-time" type="text" />
-		</>
-	);
-}
+			<label className={labelClassnames} htmlFor="email">
+				Email
+			</label>
+			<input className={inputClassnames} name="email" type="email" value={formData?.email} />
 
-function Macros() {
-	return (
-		<>
-			<label htmlFor="macros">Enter Macros</label>
-			<input name="macros" type="text" />
-		</>
-	);
-}
+			<label className={labelClassnames} htmlFor="password">
+				Password
+			</label>
+			<input
+				className={inputClassnames}
+				name="password"
+				type="password"
+				value={formData?.password}
+			/>
 
-function MealPlan() {
-	return (
-		<>
-			<label htmlFor="meal-plan">Enter meal plan details</label>
-			<input name="meal-plan" type="text" />
-		</>
+			<label className={labelClassnames} htmlFor="passwordConf">
+				Password Confirmation
+			</label>
+			<input
+				className={inputClassnames}
+				name="passwordConf"
+				type="password"
+				value={formData?.passwordConf}
+			/>
+		</section>
 	);
-}
+};
 
-function Nutritionals() {
+export const Budget = ({ formData }: FormStepProps) => {
 	return (
-		<>
-			<label htmlFor="nutritionals">Enter Nutritional Requirements</label>
-			<input name="nutritionals" type="text" />
-		</>
+		<section>
+			<label className={labelClassnames} htmlFor="budget">
+				Enter budget
+			</label>
+			<input className={inputClassnames} name="budget" type="text" value={formData?.budget} />
+		</section>
 	);
-}
+};
+
+export const DeliveryTime = ({ formData }: FormStepProps) => {
+	return (
+		<section>
+			<label className={labelClassnames} htmlFor="deliveryTime">
+				Desired delivery time
+			</label>
+			<input
+				className={inputClassnames}
+				name="deliveryTime"
+				type="text"
+				value={formData?.deliveryTime}
+			/>
+		</section>
+	);
+};
+
+export const Macros = ({ formData }: FormStepProps) => {
+	return (
+		<section>
+			<label className={labelClassnames} htmlFor="macros">
+				Enter Macros
+			</label>
+			<input className={inputClassnames} name="macros" type="text" value={formData?.macros} />
+		</section>
+	);
+};
+
+export const MealPlan = ({ formData }: FormStepProps) => {
+	return (
+		<section>
+			<label className={labelClassnames} htmlFor="mealPlan">
+				Enter meal plan details
+			</label>
+			<input
+				className={inputClassnames}
+				name="mealPlan"
+				type="text"
+				value={formData?.mealPlan}
+			/>
+		</section>
+	);
+};
+
+export const Nutritionals = ({ formData }: FormStepProps) => {
+	return (
+		<section>
+			<label className={labelClassnames} htmlFor="nutritionals">
+				Enter Nutritional Requirements
+			</label>
+			<input
+				className={inputClassnames}
+				name="nutritionals"
+				type="text"
+				value={formData?.nutritionals}
+			/>
+		</section>
+	);
+};
+
+export const Submit = () => {
+	return <Button type="submit">Submit</Button>;
+};
 
 export default function SignupForm() {
-	const [state, formAction] = useActionState(getAllProducts, null);
+	const initialState = {
+		formData: new FormData(),
+	};
+
+	const [state, formAction] = useActionState(userSignup, initialState);
+
+	const slides = [
+		<Info key="info" formData={state.formData} />,
+		<Address key="address" formData={state.formData} />,
+		<Budget key="budget" formData={state.formData} />,
+		<DeliveryTime key="deliveryTime" formData={state.formData} />,
+		<Macros key="macros" formData={state.formData} />,
+		<MealPlan key="mealPlan" formData={state.formData} />,
+		<Nutritionals key="nutritionals" formData={state.formData} />,
+	];
+
+	const handleNext = (e: any) => {
+		const form = e.currentTarget.closest("form");
+		if (form) {
+			let currentSlide = parseInt(form.dataset.move || "0", 10);
+			if (currentSlide < slides.length - 1) {
+				form.dataset.move = (currentSlide + 1).toString();
+				form.style.setProperty("--slide", form.dataset.move);
+			}
+		}
+	};
+
+	const handlePrevious = (e: any) => {
+		const form = e.currentTarget.closest("form");
+		if (form) {
+			let currentSlide = parseInt(form.dataset.move || "0", 10);
+			if (currentSlide > 0) {
+				form.dataset.move = (currentSlide - 1).toString();
+				form.style.setProperty("--slide", form.dataset.move);
+			}
+		}
+	};
 
 	return (
-		<form className="flex flex-col" action={formAction}>
-			<Address />
-			<Info />
-			<Budget />
-			<DeliveryTime />
-			<Macros />
-			<MealPlan />
-			<Nutritionals />
+		<form
+			className="flex flex-col relative w-full max-w-md mx-auto overflow-hidden"
+			action={formAction}
+			data-move="0"
+		>
+			<div className="w-full h-full flex transition-transform duration-300 signup-nav">
+				{slides.map((slide, index) => (
+					<div key={index} className="w-full flex-shrink-0 flex flex-col justify-between">
+						{slide}
+						<div className="flex justify-between mt-4">
+							<Button
+								type="button"
+								onClick={handlePrevious}
+								className={clsx({
+									"bg-gray-500 hover:bg-gray-400 disabled": index === 0,
+								})}
+							>
+								Previous
+							</Button>
+
+							<Button
+								type={index === slides.length - 1 ? "submit" : "button"}
+								onClick={handleNext}
+							>
+								{index === slides.length - 1 ? "Submit" : "Next"}
+							</Button>
+						</div>
+					</div>
+				))}
+			</div>
+
+			{/* Navigation Buttons */}
+
+			{/* {isLastStep && <input type="hidden" name="lastStep" value="true" />}
+			<div className="flex justify-between mt-4">
+				<Button
+					type="button"
+					onClick={handlePrevious}
+					className={clsx({ "bg-gray-500 hover:bg-gray-400": step === 0 })}
+					disabled={step === 0}
+				>
+					Previous
+				</Button>
+				<Button
+					type={"submit"}
+					className={clsx(
+						"bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-auto",
+						{ hidden: !isLastStep }
+					)}
+				>
+					Submit
+				</Button> */}
+			{/* </div> */}
 		</form>
 	);
 }
