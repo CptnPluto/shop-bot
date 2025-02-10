@@ -154,7 +154,8 @@ export const Submit = () => {
 
 export default function SignupForm() {
 	const initialState = {
-		formData: new FormData(),
+		message: null,
+		errors: {},
 	};
 
 	const [state, formAction] = useActionState(userSignup, initialState);
@@ -211,13 +212,19 @@ export default function SignupForm() {
 							>
 								Previous
 							</Button>
-
-							<Button
-								type={index === slides.length - 1 ? "submit" : "button"}
-								onClick={handleNext}
-							>
-								{index === slides.length - 1 ? "Submit" : "Next"}
-							</Button>
+							{index === slides.length - 1 && (
+								<input type="hidden" name="finalStep" value="true" />
+							)}
+							{index === slides.length - 1 ? (
+								<Button type="submit">Submit</Button>
+							) : (
+								<Button
+									type={index === slides.length - 1 ? "submit" : "button"}
+									onClick={handleNext}
+								>
+									Next
+								</Button>
+							)}
 						</div>
 					</div>
 				))}
