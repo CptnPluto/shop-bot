@@ -1,8 +1,8 @@
 "use client";
 
-import { getAllProducts } from "../lib/actions";
+import { getAllProducts } from "@/lib/actions";
 import { useActionState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@ui/button";
 import Link from "next/link";
 
 export default function Page() {

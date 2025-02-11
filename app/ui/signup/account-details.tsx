@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { Button } from "../button";
 import { useActionState } from "react";
-import { userSignup } from "@/app/lib/actions";
 import clsx from "clsx";
+import { userSignup } from "@/lib/actions";
+import { Button } from "@ui/button";
 
 const inputClassnames =
 	"peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500";

@@ -1,4 +1,4 @@
-import AccountCreation from "../ui/signup/account-creation";
+import AccountCreation from "@ui/signup/account-creation";
 
 export default function Page() {
 	return (

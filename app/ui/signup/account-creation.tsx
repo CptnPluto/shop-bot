@@ -1,12 +1,12 @@
 "use client";
 
-import { lusitana } from "@/app/ui/fonts";
 import { AtSymbolIcon, KeyIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import { Button } from "@/app/ui/button";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
-import { signup, SignupState } from "@/app/lib/actions";
+import { lusitana } from "@ui/fonts";
+import { Button } from "@ui/button";
+import { signup, SignupState } from "@/lib/actions";
 
 const initialState: SignupState = {
 	errors: {},
