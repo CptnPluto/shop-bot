@@ -68,11 +68,11 @@ export default function LoginForm() {
 				<div className="flex mt-2 items-center justify-between">
 					<p>Don&apos;t have an account?</p>
 					<Link
-						className="flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+						className="flex h-5 items-center px-1 ml-2 rounded-lg text-sm font-medium text-blue-500 transition-colors hover:text-blue-400 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
 						href="/signup"
 					>
 						Sign up{" "}
-						<ArrowRightIcon className="group-hover:text-blue-900 ml-auto h-5 w-5 text-gray-50 inline" />
+						<ArrowRightIcon className="group-hover:text-blue-900 ml-auto h-5 w-5 text-blue-500 inline" />
 					</Link>
 				</div>
 				<div className="flex h-8 items-end space-x-1">

@@ -29,6 +29,39 @@ async function seedUsers() {
   return insertedUsers;
 }
 
+async function updateUsers() {
+    // add the following optional fields: 
+	// address: string;
+	// macros: string;
+	// nutritionals: string;
+	// budget: string;
+	// deliveryTime: string;
+	// mealPlan: string;
+	// password: string;
+	// passwordConf: string;
+    // age: number;
+    // zip: number;
+    // city: string;
+    // state: string;
+    // country: string;
+    // phone: string;
+    await client.sql`
+    ALTER TABLE users
+    ADD COLUMN IF NOT EXISTS address VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS nutritionals VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS budget VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS deliveryTime VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS mealPlan VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS age INT,
+    ADD COLUMN IF NOT EXISTS zip VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS city VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS state VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS country VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS phone VARCHAR(255);
+    `
+
+}
+
 // async function seedInvoices() {
 //   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -108,7 +141,8 @@ export async function GET() {
 //   });
   try {
     await client.sql`BEGIN`;
-    await seedUsers();
+    // await seedUsers();
+    await updateUsers();
 //     await seedCustomers();
 //     await seedInvoices();
 //     await seedRevenue();

@@ -12,7 +12,7 @@ export default function Page() {
 		<main className="text-2xl">
 			<div>Home Page.</div>
 			<div id="apis">
-				<span>API&aposs</span>
+				<span>API&apos;s</span>
 				<ol>
 					<li>
 						<form action={formAction}>
