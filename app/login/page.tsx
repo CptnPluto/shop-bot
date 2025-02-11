@@ -1,6 +1,8 @@
 // import AcmeLogo from "../ui/acme-logo";
+import Loading from "@/signup/loading";
 import LoginForm from "@ui/login-form";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Login",
@@ -13,7 +15,9 @@ export default function LoginPage() {
 				<div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
 					<div className="w-32 text-white md:w-36">{/* <AcmeLogo /> */}</div>
 				</div>
-				<LoginForm />
+				<Suspense fallback={<Loading />}>
+					<LoginForm />
+				</Suspense>
 			</div>
 		</main>
 	);
