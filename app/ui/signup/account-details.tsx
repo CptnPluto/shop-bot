@@ -200,7 +200,7 @@ export default function SignupForm() {
 		>
 			<div className="w-full h-full flex transition-transform duration-300 signup-nav">
 				{slides.map((slide, index) => (
-					<div key={index} className="w-full flex-shrink-0 flex flex-col justify-between">
+					<div key={index} className="w-full shrink-0 flex flex-col justify-between">
 						{slide}
 						<div className="flex justify-between mt-4">
 							<Button
@@ -245,7 +245,7 @@ export default function SignupForm() {
 				<Button
 					type={"submit"}
 					className={clsx(
-						"bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-auto",
+						"bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-sm ml-auto",
 						{ hidden: !isLastStep }
 					)}
 				>

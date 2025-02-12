@@ -18,7 +18,7 @@ export default function Home() {
 					priority
 				/> */}
 				<div className="w-full h-20 bg-blue-500 flex self-start"></div>
-				<div className="flex flex-col gap-4 items-center flex-grow-[1] justify-center">
+				<div className="flex flex-col gap-4 items-center flex-grow-1 justify-center">
 					<div>
 						<h1 className="text-4xl font-bold text-center">Welcome to ShopBot</h1>
                         <h2 className="text-2xl font-bold text-center">Your AI shopping buddy!</h2>
