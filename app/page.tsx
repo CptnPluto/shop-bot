@@ -1,28 +1,28 @@
-// import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@ui/button";
 import LoginForm from "./ui/login-form";
 import { Suspense } from "react";
 import Loading from "./signup/loading";
+import HeroImg from "images/home-hero.png";
 
 export default function Home() {
 	return (
 		<div>
-			<main className="flex flex-col gap-2 h-screen">
-				{/* <Image
-					className="dark:invert"
-					src="/next.svg"
-					alt="Next.js logo"
-					width={180}
-					height={38}
-					priority
-				/> */}
-				<div className="w-full h-20 bg-blue-500 flex self-start"></div>
-				<div className="flex flex-col gap-4 items-center flex-grow-1 justify-center">
+            <main className="flex flex-col gap-2 h-screen items-center justify-center">
+                <Image
+                    className="z-0 fixed opacity-80 w-screen h-screen"
+                    src={HeroImg}
+                    alt="ShopBot Logo"
+                    // width={}
+                    // height={280}
+                    priority
+                />
+				<div className="w-full h-20 bg-blue-500 flex self-start z-1"></div>
+				<div className="flex flex-col gap-4 m-10 rounded-lg items-center flex-grow-1 justify-center z-1 bg-white my-30 p-10">
 					<div>
 						<h1 className="text-4xl font-bold text-center">Welcome to ShopBot</h1>
                         <h2 className="text-2xl font-bold text-center">Your AI shopping buddy!</h2>
-						<p className="text-lg text-center">Get started by signing up, or logging in.</p>
 					</div>
 					<Suspense fallback={<Loading />}>
 						<LoginForm />
