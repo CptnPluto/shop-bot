@@ -8,6 +8,7 @@ export default function LoadingModal({ isPending }: { isPending: boolean }) {
 			tabIndex={-1}
 			className={clsx(
 				"flex top-0 right-0 left-0 z-50 justify-center items-center w-full fixed h-screen max-h-full bg-gray-600/90",
+                { hidden: !isPending }
 				
 			)}
 		>
