@@ -1,11 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@ui/button";
 import LoginForm from "./ui/login-form";
 import { Suspense } from "react";
 import Loading from "./signup/loading";
 import HeroImg from "images/home-hero.png";
-import { lusitana, inter } from "@ui/fonts";
 
 export default function Home() {
 	return (
