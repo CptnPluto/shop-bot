@@ -1,4 +1,4 @@
-import { inter, lusitana } from "@/ui/fonts";
+import { lusitana } from "@/ui/fonts";
 import FoodData from "@ui/food-data";
 import { Suspense } from "react";
 
