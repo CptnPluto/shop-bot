@@ -4,7 +4,6 @@ import { Suspense } from "react";
 
 export default function Page() {
     
-
 	return (
 		<main className="text-2xl">
 			<div id="apis" className="flex flex-col justify-center gap-2">
