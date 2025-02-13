@@ -1,4 +1,4 @@
-import { db } from '@vercel/postgres';
+import { db } from "@vercel/postgres";
 // import bcrypt from 'bcrypt';
 
 // import { users } from '@/lib/placeholder-data';
@@ -31,36 +31,40 @@ const client = await db.connect();
 // }
 
 async function updateUsers() {
-    // add the following optional fields: 
-	// address: string;
-	// macros: string;
-	// nutritionals: string;
-	// budget: string;
-	// deliveryTime: string;
-	// mealPlan: string;
-	// password: string;
-	// passwordConf: string;
-    // age: number;
-    // zip: number;
-    // city: string;
-    // state: string;
-    // country: string;
-    // phone: string;
-    await client.sql`
-    ALTER TABLE users
-    ADD COLUMN IF NOT EXISTS address VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS nutritionals VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS budget VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS deliveryTime VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS mealPlan VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS age INT,
-    ADD COLUMN IF NOT EXISTS zip VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS city VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS state VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS country VARCHAR(255),
-    ADD COLUMN IF NOT EXISTS phone VARCHAR(255);
-    `
+	await client.sql`
+    ALTER TABLE users 
+ADD COLUMN IF NOT EXISTS onboarded BOOLEAN;
 
+-- 2. Create (or replace) the trigger function
+CREATE OR REPLACE FUNCTION update_onboarded_fn() 
+RETURNS trigger AS $$
+BEGIN
+  NEW.onboarded :=
+    (
+      NEW.address IS NOT NULL AND
+      NEW.nutritionals IS NOT NULL AND
+      NEW.budget IS NOT NULL AND
+      NEW.deliveryTime IS NOT NULL AND
+      NEW.mealPlan IS NOT NULL AND
+      NEW.age IS NOT NULL AND
+      NEW.zip IS NOT NULL AND
+      NEW.city IS NOT NULL AND
+      NEW.state IS NOT NULL AND
+      NEW.country IS NOT NULL AND
+      NEW.phone IS NOT NULL
+    );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 3. Create the trigger that uses the above function
+DROP TRIGGER IF EXISTS update_onboarded_trigger ON users;
+
+CREATE TRIGGER update_onboarded_trigger
+BEFORE INSERT OR UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION update_onboarded_fn();
+    `;
 }
 
 // async function seedInvoices() {
@@ -136,22 +140,22 @@ async function updateUsers() {
 // }
 
 export async function GET() {
-//   return Response.json({
-//     message:
-//       'Database already seeded. Use this file if you want to try other seeding things.',
-//   });
-  try {
-    await client.sql`BEGIN`;
-    // await seedUsers();
-    await updateUsers();
-//     await seedCustomers();
-//     await seedInvoices();
-//     await seedRevenue();
-    await client.sql`COMMIT`;
+	//   return Response.json({
+	//     message:
+	//       'Database already seeded. Use this file if you want to try other seeding things.',
+	//   });
+	try {
+		await client.sql`BEGIN`;
+		// await seedUsers();
+		await updateUsers();
+		//     await seedCustomers();
+		//     await seedInvoices();
+		//     await seedRevenue();
+		await client.sql`COMMIT`;
 
-    return Response.json({ message: 'Database seeded successfully' });
-  } catch (error) {
-    await client.sql`ROLLBACK`;
-    return Response.json({ error }, { status: 500 });
-  }
+		return Response.json({ message: "Database seeded successfully" });
+	} catch (error) {
+		await client.sql`ROLLBACK`;
+		return Response.json({ error }, { status: 500 });
+	}
 }
