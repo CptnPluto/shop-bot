@@ -12,7 +12,6 @@ export default function FoodData() {
 
 	return (
 		<div>
-			<h2>Food Data</h2>
 			<Button onClick={handleFetchFood}>Fetch Food Data</Button>
 
 			<div className="relative overflow-x-auto overflow-y-auto h-[40rem] max-h-[calc(100vh-20rem)] rounded-2xl m-2 shadow-2xl">
