@@ -15,21 +15,26 @@ export default function FoodData() {
 			<h2>Food Data</h2>
 			<Button onClick={handleFetchFood}>Fetch Food Data</Button>
 
-			<div className="relative overflow-x-auto">
-				<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-					<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-						<tr>
-							{/* map all the fields of data to <th> elements */}
-							{data &&
-								data.foodData[0] &&
-								Object.keys(data.foodData[0]).map((key: string) => (
-									<th scope="col" className="px-6 py-3" key={key}>
-										{key}
-									</th>
-								))}
-						</tr>
-					</thead>
-					{data && (
+			<div className="relative overflow-x-auto overflow-y-auto h-[40rem] max-h-[calc(100vh-20rem)] rounded-2xl m-2 shadow-2xl">
+				{data ? (
+					<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+						{/* make the thead sticky */}
+						{/* <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> */}
+
+						<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
+							<tr>
+								{/* map all the fields of data to <th> elements */}
+
+								{data &&
+									data.foodData[0] &&
+									Object.keys(data.foodData[0]).map((key: string) => (
+										<th scope="col" className="px-6 py-3" key={key}>
+											{key}
+										</th>
+									))}
+							</tr>
+						</thead>
+
 						<tbody>
 							{data.foodData.map((item: any) => (
 								<tr
@@ -44,28 +49,11 @@ export default function FoodData() {
 								</tr>
 							))}
 						</tbody>
-					)}
-				</table>
+					</table>
+				) : (
+					<div className="flex justify-center items-center h-full">No data yet</div>
+				)}
 			</div>
-
-			<ul>
-				{data &&
-					data.foodData.map((item: any) => (
-						<li key={item.itemName}>
-							<h3>{item.itemName}</h3>
-							<ul>
-								<li>Protein: {item.proteinValue}</li>
-								<li>Carbs: {item.carbohydrateValue}</li>
-								<li>Fat: {item.fatValue}</li>
-								<li>Price: {item.price}</li>
-								<li>Calories: {item.calories}</li>
-								<li>Brand: {item.brand}</li>
-								<li>Category: {item.category}</li>
-								<li>Expiration Date: {item.expirationDate}</li>
-							</ul>
-						</li>
-					))}
-			</ul>
 		</div>
 	);
 }
