@@ -70,7 +70,7 @@ export default function LoginForm() {
 				<div className="flex mt-2 items-center justify-between">
 					<p>Don&apos;t have an account?</p>
 					<Link
-						className="flex h-5 items-center px-1 ml-2 rounded-lg text-sm font-medium text-blue-500 transition-colors hover:text-blue-400 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+						className="flex h-5 items-center px-1 ml-2 rounded-lg text-sm font-medium text-blue-500 transition-colors hover:text-blue-400 hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
 						href="/signup"
 					>
 						Sign up{" "}

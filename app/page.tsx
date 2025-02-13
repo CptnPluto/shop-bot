@@ -7,7 +7,6 @@ import HeroImg from "images/home-hero.png";
 export default function Home() {
 	return (
 		<main className="flex flex-col grow-1 gap-2 items-center justify-center">
-			{/* <div className="flex flex-col flex-grow-1 justify-center items-center z-1 p-10"> */}
 			<div className="fixed">
 				<Image
 					className="z-0 opacity-80 md:rounded-4xl"
@@ -15,7 +14,6 @@ export default function Home() {
 					alt="ShopBot Logo"
 					width={700}
 					height={700}
-					// fill={true}
 					priority
 				/>
 			</div>
@@ -27,11 +25,7 @@ export default function Home() {
 				<Suspense fallback={<Loading />}>
 					<LoginForm />
 				</Suspense>
-				{/* <Button>
-						<Link href="/home">Home</Link>
-					</Button> */}
 			</div>
-			{/* </div> */}
 		</main>
 	);
 	/* <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">

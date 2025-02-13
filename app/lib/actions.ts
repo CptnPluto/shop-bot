@@ -82,16 +82,6 @@ export async function userSignup(prevState: SignupState, formData: FormData): Pr
 	}
 
 	console.log("Signing user up.");
-	// console.log("Name: ", formData.get("name"));
-	// console.log("Email: ", formData.get("email"));
-	// console.log("Address: ", formData.get("address"));
-	// console.log("Macros: ", formData.get("macros"));
-	// console.log("Nutritionals: ", formData.get("nutritionals"));
-	// console.log("Budget: ", formData.get("budget"));
-	// console.log("DeliveryTime: ", formData.get("deliveryTime"));
-	// console.log("Meal Plan: ", formData.get("mealPlan"));
-	// console.log("Password: ", formData.get("password"));
-	// console.log("Password Conf: ", formData.get("passwordConf"));
 
 	return { message: "Success!", errors: {} };
 }

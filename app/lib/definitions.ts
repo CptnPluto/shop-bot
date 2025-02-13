@@ -5,3 +5,9 @@ export type User = {
 	password: string;
 	// address: string;
 };
+
+export type FoodDataType = {
+    message?: string;
+    foodData?: any[];
+    errors?: any;
+}
