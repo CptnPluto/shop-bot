@@ -3,88 +3,61 @@ import React from "react";
 import { useActionState } from "react";
 import clsx from "clsx";
 import { signup } from "@/lib/actions";
-import { Button } from "@ui/button";
-
-const inputClassnames =
-	"peer block w-full rounded-md border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500";
-const labelClassnames = "mb-2 block text-sm font-medium";
-
-type UserSignup = {
-	name: string;
-	email: string;
-	address: string;
-	macros: string;
-	nutritionals: string;
-	budget: string;
-	deliveryTime: string;
-	mealPlan: string;
-	password: string;
-	passwordConf: string;
-};
+import { Button, Label, Input } from "@ui/custom-components";
+import type { UserOnboarding } from "@/lib/definitions";
 
 interface FormStepProps {
-	formData: UserSignup;
+	formData: UserOnboarding;
 }
 
 export const Address = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="address">
-				Address
-			</label>
-			<input
-				className={inputClassnames}
-				name="address"
-				type="text"
-				value={formData?.address}
-			/>
+			<Label htmlFor="address">Address</Label>
+			<Input name="address" type="text" value={formData?.address} />
 		</section>
 	);
 };
 
-export const Info = ({ formData }: FormStepProps) => {
-	return (
-		<section>
-			<label className={labelClassnames} htmlFor="name">
-				Name
-			</label>
-			<input className={inputClassnames} name="name" type="text" value={formData?.name} />
+// export const Info = ({ formData }: FormStepProps) => {
+// 	return (
+// 		<section>
+// 			<Label htmlFor="name">
+// 				Name
+// 			</Label>
+// 			<Input name="name" type="text" value={formData?.name} />
 
-			<label className={labelClassnames} htmlFor="email">
-				Email
-			</label>
-			<input className={inputClassnames} name="email" type="email" value={formData?.email} />
+// 			<Label htmlFor="email">
+// 				Email
+// 			</Label>
+// 			<Input name="email" type="email" value={formData?.email} />
 
-			<label className={labelClassnames} htmlFor="password">
-				Password
-			</label>
-			<input
-				className={inputClassnames}
-				name="password"
-				type="password"
-				value={formData?.password}
-			/>
+// 			<Label htmlFor="password">
+// 				Password
+// 			</Label>
+// 			<Input
+// 				name="password"
+// 				type="password"
+// 				value={formData?.password}
+// 			/>
 
-			<label className={labelClassnames} htmlFor="passwordConf">
-				Password Confirmation
-			</label>
-			<input
-				className={inputClassnames}
-				name="passwordConf"
-				type="password"
-				value={formData?.passwordConf}
-			/>
-		</section>
-	);
-};
+// 			<Label htmlFor="passwordConf">
+// 				Password Confirmation
+// 			</Label>
+// 			<Input
+// 				name="passwordConf"
+// 				type="password"
+// 				value={formData?.passwordConf}
+// 			/>
+// 		</section>
+// 	);
+// };
 
 export const Budget = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="budget">
-				Enter budget
-			</label>
-			<input className={inputClassnames} name="budget" type="text" value={formData?.budget} />
+			<Label htmlFor="budget">Enter budget</Label>
+			<Input name="budget" type="text" value={formData?.budget} />
 		</section>
 	);
 };
@@ -92,15 +65,8 @@ export const Budget = ({ formData }: FormStepProps) => {
 export const DeliveryTime = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="deliveryTime">
-				Desired delivery time
-			</label>
-			<input
-				className={inputClassnames}
-				name="deliveryTime"
-				type="text"
-				value={formData?.deliveryTime}
-			/>
+			<Label htmlFor="deliveryTime">Desired delivery time</Label>
+			<Input name="deliveryTime" type="text" value={formData?.deliveryTime} />
 		</section>
 	);
 };
@@ -108,10 +74,8 @@ export const DeliveryTime = ({ formData }: FormStepProps) => {
 export const Macros = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="macros">
-				Enter Macros
-			</label>
-			<input className={inputClassnames} name="macros" type="text" value={formData?.macros} />
+			<Label htmlFor="macros">Enter Macros</Label>
+			<Input name="macros" type="text" value={formData?.macros} />
 		</section>
 	);
 };
@@ -119,15 +83,8 @@ export const Macros = ({ formData }: FormStepProps) => {
 export const MealPlan = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="mealPlan">
-				Enter meal plan details
-			</label>
-			<input
-				className={inputClassnames}
-				name="mealPlan"
-				type="text"
-				value={formData?.mealPlan}
-			/>
+			<Label htmlFor="mealPlan">Enter meal plan details</Label>
+			<Input name="mealPlan" type="text" value={formData?.mealPlan} />
 		</section>
 	);
 };
@@ -135,15 +92,8 @@ export const MealPlan = ({ formData }: FormStepProps) => {
 export const Nutritionals = ({ formData }: FormStepProps) => {
 	return (
 		<section>
-			<label className={labelClassnames} htmlFor="nutritionals">
-				Enter Nutritional Requirements
-			</label>
-			<input
-				className={inputClassnames}
-				name="nutritionals"
-				type="text"
-				value={formData?.nutritionals}
-			/>
+			<Label htmlFor="nutritionals">Enter Nutritional Requirements</Label>
+			<Input name="nutritionals" type="text" value={formData?.nutritionals} />
 		</section>
 	);
 };
@@ -161,7 +111,7 @@ export default function SignupForm() {
 	const [state, formAction] = useActionState(signup, initialState);
 
 	const slides = [
-		<Info key="info" formData={state.formData} />,
+		// <Info key="info" formData={state.formData} />,
 		<Address key="address" formData={state.formData} />,
 		<Budget key="budget" formData={state.formData} />,
 		<DeliveryTime key="deliveryTime" formData={state.formData} />,
@@ -213,7 +163,7 @@ export default function SignupForm() {
 								Previous
 							</Button>
 							{index === slides.length - 1 && (
-								<input type="hidden" name="finalStep" value="true" />
+								<Input type="hidden" name="finalStep" value="true" />
 							)}
 							{index === slides.length - 1 ? (
 								<Button type="submit">Submit</Button>
@@ -232,7 +182,7 @@ export default function SignupForm() {
 
 			{/* Navigation Buttons */}
 
-			{/* {isLastStep && <input type="hidden" name="lastStep" value="true" />}
+			{/* {isLastStep && <Input type="hidden" name="lastStep" value="true" />}
 			<div className="flex justify-between mt-4">
 				<Button
 					type="button"

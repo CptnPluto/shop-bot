@@ -6,7 +6,8 @@ import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { lusitana } from "@ui/fonts";
 import { Button } from "@ui/button";
-import { signup, SignupState } from "@/lib/actions";
+import { signup } from "@/lib/actions";
+import { SignupState } from "@/lib/definitions";
 
 const initialState: SignupState = {
 	errors: {},

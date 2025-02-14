@@ -33,11 +33,13 @@ const FoodItemSchema = z.object({
 	expirationDate: z.string(),
 });
 
+export const FoodItemsSchema = z.array(FoodItemSchema);
+
 export const UserSchema = z.object({
 	id: z.string(),
 	name: z.string(),
 	email: z.string(),
-	password: z.string().optional(),
+	password: z.string(),
 	address: z.string().optional(),
 	nutritionals: z.string().optional(),
 	budget: z.string().optional(),
@@ -51,4 +53,8 @@ export const UserSchema = z.object({
 	phone: z.string().optional(),
 });
 
-export const FoodItemsSchema = z.array(FoodItemSchema);
+export const UserOnboardingSchema = UserSchema.omit({
+    name: true,
+    email: true,
+    password: true,
+})

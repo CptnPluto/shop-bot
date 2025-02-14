@@ -1,6 +1,5 @@
 import { sql } from "@vercel/postgres";
 import type { User } from "@/lib/definitions";
-import { UserSchema } from "@/lib/zod";
 
 export async function getUser(email: string): Promise<User | undefined> {
 	try {
@@ -12,26 +11,3 @@ export async function getUser(email: string): Promise<User | undefined> {
 	}
 }
 
-export async function updateUser(userData: User): Promise<any> {
-	const validatedFields = UserSchema.safeParse(userData);
-	if (!validatedFields.success) {
-		return {
-			errors: validatedFields.error.flatten().fieldErrors,
-			message: "Missing fields. Failed to create invoice.",
-		};
-	}
-	try {
-		await sql`
-			UPDATE users
-			SET 
-				name = ${userData.name},
-				email = ${userData.email},
-				age = ${userData.age},
-				address = ${userData.address}
-			WHERE id = ${userData.id}
-		`;
-	} catch (error) {
-		console.error("Failed to update user in DB:", error);
-		throw new Error("Failed to update user in DB.");
-	}
-}

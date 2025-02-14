@@ -6,23 +6,9 @@ import { signIn } from "auth";
 import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
-
-// const FormSchema = z.object({
-// 	address: z.string(),
-// 	macros: z.string(),
-// 	nutritionals: z.string(),
-// 	budget: z.string(),
-// 	deliveryTime: z.string(),
-// 	mealPlan: z.string(),
-// 	name: z.string().min(2, { message: "Name must be 2 or more characters long." }),
-// 	email: z.string().email({ message: "Invalid email address." }),
-// 	password: z.string().min(6, { message: "Password must be 5 or more characters long." }),
-// 	passwordConf: z.string().min(6, { message: "Password must be 5 or more characters long." }),
-// });
-// .refine((data) => data.password === data.passwordConf, {
-// 	message: "Passwords don't match",
-// 	path: ["passwordConf"],
-// });
+import { generateSampleData } from "@/utils/placeholder-data";
+import { SignupState, User } from "./definitions";
+import { UserSchema } from "./zod";
 
 const CreateAccount = z
 	.object({
@@ -35,31 +21,6 @@ const CreateAccount = z
 		message: "Passwords don't match",
 		path: ["passwordConf"],
 	});
-
-export type UserSignup = {
-	name: string;
-	email: string;
-	address: string;
-	macros: string;
-	nutritionals: string;
-	budget: string;
-	deliveryTime: string;
-	mealPlan: string;
-	password: string;
-	passwordConf: string;
-};
-
-export type SignupState = {
-	errors?: {
-		name?: string[];
-		email?: string[];
-		password?: string[];
-		passwordConf?: string[];
-		status?: string[];
-	};
-	message?: string | null;
-	prevState?: FormData;
-};
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
 	try {
@@ -103,4 +64,45 @@ export async function signup(prevState: SignupState, formData: FormData): Promis
 	}
 
 	redirect("/login");
+}
+
+export async function fetchFoodData(): Promise<any> {
+	try {
+		const sampleData = generateSampleData();
+
+		// const response = await fetch("/api/food");
+		// if (!response.ok) {
+		// throw new Error("Failed to fetch food data");
+		// }
+		// const data = await response.json();
+		console.log("Fetching food data: ", sampleData[0]);
+		return { message: `Successfully fetched food data`, foodData: sampleData, errors: {} };
+	} catch (error) {
+		console.error("Error fetching food data: ", error);
+		return { message: "Error fetching food data", errors: error };
+	}
+}
+
+export async function updateUser(userData: User): Promise<any> {
+	const validatedFields = UserSchema.safeParse(userData);
+	if (!validatedFields.success) {
+		return {
+			errors: validatedFields.error.flatten().fieldErrors,
+			message: "Missing fields. Failed to create invoice.",
+		};
+	}
+	try {
+		await sql`
+			UPDATE users
+			SET 
+				name = ${userData.name},
+				email = ${userData.email},
+				age = ${userData.age},
+				address = ${userData.address}
+			WHERE id = ${userData.id}
+		`;
+	} catch (error) {
+		console.error("Failed to update user in DB:", error);
+		throw new Error("Failed to update user in DB.");
+	}
 }

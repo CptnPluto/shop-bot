@@ -14,7 +14,28 @@ export type User = {
 	state?: string;
 	country?: string;
 	phone?: string;
-    onboarded?: string;
+    onboarded: string; // conditional in the DB based on if all other fields are filled out
+};
+
+export type UserOnboarding = {
+    address: string;
+    macros: string;
+    nutritionals: string;
+    budget: string;
+    deliveryTime: string;
+    mealPlan: string;
+};
+
+export type SignupState = {
+    errors?: {
+        name?: string[];
+        email?: string[];
+        password?: string[];
+        passwordConf?: string[];
+        status?: string[];
+    };
+    message?: string | null;
+    prevState?: FormData;
 };
 
 export type FoodDataType = {
@@ -22,3 +43,4 @@ export type FoodDataType = {
 	foodData?: any[];
 	errors?: any;
 };
+

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "./button";
-import { fetchFoodData } from "@/api/food/getFoodData";
+import { fetchFoodData } from "@/lib/actions";
 
 export default function FoodData() {
 	const [data, setData] = useState<any>(null);
