@@ -13,7 +13,7 @@ export default async function Page() {
 			<div id="apis" className="flex flex-col justify-center gap-2">
 				<h1 className={`${lusitana.className} `}>API&apos;s</h1>
 				{isOnboarded === "true" ? (
-					<div>You're ready to start ordering!</div>
+					<div>You&apos;re ready to start ordering!</div>
 				) : (
 					<div>Ready to get started? Fill out your preferences now.</div>
 				)}
