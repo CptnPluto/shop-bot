@@ -7,18 +7,18 @@ import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 
-const FormSchema = z.object({
-	address: z.string(),
-	macros: z.string(),
-	nutritionals: z.string(),
-	budget: z.string(),
-	deliveryTime: z.string(),
-	mealPlan: z.string(),
-	name: z.string().min(2, { message: "Name must be 2 or more characters long." }),
-	email: z.string().email({ message: "Invalid email address." }),
-	password: z.string().min(6, { message: "Password must be 5 or more characters long." }),
-	passwordConf: z.string().min(6, { message: "Password must be 5 or more characters long." }),
-});
+// const FormSchema = z.object({
+// 	address: z.string(),
+// 	macros: z.string(),
+// 	nutritionals: z.string(),
+// 	budget: z.string(),
+// 	deliveryTime: z.string(),
+// 	mealPlan: z.string(),
+// 	name: z.string().min(2, { message: "Name must be 2 or more characters long." }),
+// 	email: z.string().email({ message: "Invalid email address." }),
+// 	password: z.string().min(6, { message: "Password must be 5 or more characters long." }),
+// 	passwordConf: z.string().min(6, { message: "Password must be 5 or more characters long." }),
+// });
 // .refine((data) => data.password === data.passwordConf, {
 // 	message: "Passwords don't match",
 // 	path: ["passwordConf"],
@@ -60,31 +60,6 @@ export type SignupState = {
 	message?: string | null;
 	prevState?: FormData;
 };
-
-export async function getAllProducts(prevState: any, formData: FormData) {
-	console.log("Getting all products");
-	console.log("Form data: ", formData.get("name"));
-	return { message: `Successfully submitted`, formData: formData, errors: {} };
-}
-
-export async function userSignup(prevState: SignupState, formData: FormData): Promise<any> {
-	const rawData = Object.fromEntries(formData.entries());
-	console.log("Raw data: ", rawData);
-	const validatedFields = FormSchema.safeParse(rawData);
-	console.log("validated fields: ", validatedFields);
-
-	if (!validatedFields.success) {
-		return {
-			errors: validatedFields.error?.flatten().fieldErrors,
-			message: "Missing fields. Failed to create invoice.",
-			state: prevState,
-		};
-	}
-
-	console.log("Signing user up.");
-
-	return { message: "Success!", errors: {} };
-}
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
 	try {

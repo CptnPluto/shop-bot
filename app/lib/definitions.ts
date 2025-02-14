@@ -2,7 +2,7 @@ export type User = {
 	id: string;
 	name: string;
 	email: string;
-	password?: string;
+	password: string;
 	address?: string;
 	nutritionals?: string;
 	budget?: string;
@@ -14,6 +14,7 @@ export type User = {
 	state?: string;
 	country?: string;
 	phone?: string;
+    onboarded?: string;
 };
 
 export type FoodDataType = {
