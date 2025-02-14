@@ -2,7 +2,7 @@
 import React from "react";
 import { useActionState } from "react";
 import clsx from "clsx";
-import { userSignup } from "@/lib/actions";
+import { signup } from "@/lib/actions";
 import { Button } from "@ui/button";
 
 const inputClassnames =
@@ -158,7 +158,7 @@ export default function SignupForm() {
 		errors: {},
 	};
 
-	const [state, formAction] = useActionState(userSignup, initialState);
+	const [state, formAction] = useActionState(signup, initialState);
 
 	const slides = [
 		<Info key="info" formData={state.formData} />,
