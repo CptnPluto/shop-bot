@@ -5,7 +5,7 @@ import { AtSymbolIcon, KeyIcon, ExclamationCircleIcon } from "@heroicons/react/2
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@ui/button";
+import { Button } from "@ui/custom-components";
 import LoadingModal from "@ui/loading-modal";
 import { authenticate } from "@/lib/actions";
 import { lusitana } from "@ui/fonts";

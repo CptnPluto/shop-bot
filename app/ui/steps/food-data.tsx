@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button } from "./button";
+import { Button } from "@ui/custom-components";
 import { fetchFoodData } from "@/lib/actions";
 
 export default function FoodData() {

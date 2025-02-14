@@ -3,7 +3,12 @@ import type { NextAuthConfig } from 'next-auth';
 
 const validPaths = [
     '/home',
-    '/dashboard',
+    '/step-1',
+    '/step-2',
+    '/step-3',
+    '/step-4',
+    '/step-5',
+    '/step-6',
 ]
 export const authConfig = {
     pages: {

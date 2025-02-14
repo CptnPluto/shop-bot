@@ -30,7 +30,7 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"app/lib/placeholder-data.ts",
-		"scripts/seed.js",
+		"scripts/seed.js", "app/(logged-in)/step-1", "app/(logged-in)/step-2", "app/(logged-in)/step-3", "app/(logged-in)/step-4", "app/(logged-in)/step-5", "app/(logged-in)/step-6",
         
 	],
 	"exclude": ["node_modules"]

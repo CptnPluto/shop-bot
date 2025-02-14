@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { lusitana } from "@ui/fonts";
-import { Button } from "@ui/button";
+import { Button } from "@ui/custom-components";
 import { signup } from "@/lib/actions";
 import { SignupState } from "@/lib/definitions";
 
