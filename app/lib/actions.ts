@@ -7,8 +7,12 @@ import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import { generateSampleData } from "@/utils/placeholder-data";
-import { SignupState, User } from "./definitions";
-import { UserSchema } from "./zod";
+import { FoodDataType, FoodItemType, SignupState, User } from "./definitions";
+import { FoodPreferencesSchema, UserSchema } from "./zod";
+import { cookies } from "next/headers";
+import { getUser } from "@/utils/db";
+import { sortFoodData } from "@/utils/sortFoodData";
+import { Nutritionals } from "@/ui/signup/account-details";
 
 const CreateAccount = z
 	.object({
@@ -66,23 +70,6 @@ export async function signup(prevState: SignupState, formData: FormData): Promis
 	redirect("/login");
 }
 
-export async function fetchFoodData(): Promise<any> {
-	try {
-		const sampleData = generateSampleData();
-
-		// const response = await fetch("/api/food");
-		// if (!response.ok) {
-		// throw new Error("Failed to fetch food data");
-		// }
-		// const data = await response.json();
-		console.log("Fetching food data: ", sampleData[0]);
-		return { message: `Successfully fetched food data`, foodData: sampleData, errors: {} };
-	} catch (error) {
-		console.error("Error fetching food data: ", error);
-		return { message: "Error fetching food data", errors: error };
-	}
-}
-
 export async function updateUser(userData: User): Promise<any> {
 	const validatedFields = UserSchema.safeParse(userData);
 	if (!validatedFields.success) {
@@ -106,3 +93,50 @@ export async function updateUser(userData: User): Promise<any> {
 		throw new Error("Failed to update user in DB.");
 	}
 }
+
+export async function fetchFoodData(): Promise<any> {
+	try {
+		// load user preferencesArray
+		const cookieStore = await cookies();
+		const userEmail = cookieStore.get("email")?.value || "";
+		const userData = await getUser(userEmail);
+        console.log("userData: ", userData);
+		const rawMacroData = {
+			protein: userData?.protein,
+			fat: userData?.fat,
+			carbohydrates: userData?.carbohydrates,
+			nutritionals: userData?.nutritionals,
+		};
+
+		const validatedFields = FoodPreferencesSchema.safeParse(rawMacroData);
+
+		if (!validatedFields.success) {
+			return {
+				errors: validatedFields.error.flatten().fieldErrors,
+				message: "Marco data error.",
+			};
+		}
+
+		// perform fetch to external api WHERE matches preferencesArray
+		let foodData: FoodItemType[] = generateSampleData();
+		console.log("Fetching food data: ", foodData[0]);
+
+		if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
+		// const response = await fetch("/api/food");
+		// if (!response.ok) {
+		// throw new Error("Failed to fetch food data");
+		// }
+		// const data = await response.json();
+		return { message: `Successfully fetched food data`, foodData: foodData, errors: {} };
+	} catch (error) {
+		console.error("Error fetching food data: ", error);
+		return { message: "Error fetching food data", errors: error };
+	}
+}
+
+// sort food data based on user preferences
+// export async function generateRecipes(foodData): Promise<any> {
+// 	// load user macro data
+// 	const macroData = { carbs: user.carbohydrates, protein: user.portein, fat: user.fat };
+// 	// pass foodData and macroData to AI API to generate recipes
+// }

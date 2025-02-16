@@ -54,7 +54,14 @@ export const UserSchema = z.object({
 });
 
 export const UserOnboardingSchema = UserSchema.omit({
-    name: true,
-    email: true,
-    password: true,
-})
+	name: true,
+	email: true,
+	password: true,
+});
+
+export const FoodPreferencesSchema = z.object({
+	fat: z.number(),
+	protein: z.number(),
+	carbohydrates: z.number(),
+	nutritionals: z.string(),
+});

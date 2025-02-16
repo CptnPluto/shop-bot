@@ -31,39 +31,53 @@ const client = await db.connect();
 // }
 
 async function updateUsers() {
+	// 1. Alter table to add new columns
 	await client.sql`
-    ALTER TABLE users 
-ADD COLUMN IF NOT EXISTS onboarded BOOLEAN;
+      ALTER TABLE users 
+        ADD COLUMN IF NOT EXISTS onboarded BOOLEAN,
+        ADD COLUMN IF NOT EXISTS protein INT,
+        ADD COLUMN IF NOT EXISTS carbohydrates INT,
+        ADD COLUMN IF NOT EXISTS fat INT;
+    `;
 
--- 2. Create (or replace) the trigger function
-CREATE OR REPLACE FUNCTION update_onboarded_fn() 
-RETURNS trigger AS $$
-BEGIN
-  NEW.onboarded :=
-    (
-      NEW.address IS NOT NULL AND
-      NEW.nutritionals IS NOT NULL AND
-      NEW.budget IS NOT NULL AND
-      NEW.deliveryTime IS NOT NULL AND
-      NEW.mealPlan IS NOT NULL AND
-      NEW.age IS NOT NULL AND
-      NEW.zip IS NOT NULL AND
-      NEW.city IS NOT NULL AND
-      NEW.state IS NOT NULL AND
-      NEW.country IS NOT NULL AND
-      NEW.phone IS NOT NULL
-    );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+	// 2. Create (or replace) the trigger function with proper logical operators
+	await client.sql`
+      CREATE OR REPLACE FUNCTION update_onboarded_fn() 
+      RETURNS trigger AS $$
+      BEGIN
+        NEW.onboarded :=
+          (
+            NEW.address IS NOT NULL AND
+            NEW.nutritionals IS NOT NULL AND
+            NEW.budget IS NOT NULL AND
+            NEW.deliveryTime IS NOT NULL AND
+            NEW.mealPlan IS NOT NULL AND
+            NEW.age IS NOT NULL AND
+            NEW.zip IS NOT NULL AND
+            NEW.city IS NOT NULL AND
+            NEW.state IS NOT NULL AND
+            NEW.country IS NOT NULL AND
+            NEW.phone IS NOT NULL AND
+            NEW.protein IS NOT NULL AND
+            NEW.carbohydrates IS NOT NULL AND
+            NEW.fat IS NOT NULL
+          );
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+    `;
 
--- 3. Create the trigger that uses the above function
-DROP TRIGGER IF EXISTS update_onboarded_trigger ON users;
+	// 3. Drop the trigger if it exists
+	await client.sql`
+      DROP TRIGGER IF EXISTS update_onboarded_trigger ON users;
+    `;
 
-CREATE TRIGGER update_onboarded_trigger
-BEFORE INSERT OR UPDATE ON users
-FOR EACH ROW
-EXECUTE FUNCTION update_onboarded_fn();
+	// 4. Create the trigger that uses the above function
+	await client.sql`
+      CREATE TRIGGER update_onboarded_trigger
+      BEFORE INSERT OR UPDATE ON users
+      FOR EACH ROW
+      EXECUTE FUNCTION update_onboarded_fn();
     `;
 }
 

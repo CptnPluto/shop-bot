@@ -22,8 +22,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     
 					const passwordsMatch = await bcrypt.compare(password, user.password);
 					if (passwordsMatch){
+                        cookieStore.set('email', `${user.email}`)
 						cookieStore.set('onboarded', `${user.onboarded ?? false}`)
-                        return user;  
+                        return user;
                     } 
 				}
 
