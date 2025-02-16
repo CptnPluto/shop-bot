@@ -156,7 +156,7 @@ export async function fetchFoodData(): Promise<FoodDataType> {
 }
 
 export async function generateRecipes(data: FoodDataType): Promise<GenRecipesResponse> {
-    const foodData = data.foodData
+    const foodData = data.foodData || []
 
     try {
 		const response = await fetch(`${BASE_URL}/api/food`, {
