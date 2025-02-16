@@ -6,12 +6,12 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function Page() {
-    const foodData: FoodDataType = {}
-const recipeRes = generateRecipes(foodData);
+	const foodData: FoodDataType = {};
+	const recipeRes = generateRecipes(foodData);
 
 	return (
 		<main className="flex flex-col gap-y-10">
-            <h1 className="text-4xl">Recipes</h1>
+			<h1 className="text-4xl">Recipes</h1>
 			<Suspense fallback={<div>Loading...</div>}>
 				<RecipeCards genRecipeResponse={recipeRes} />
 			</Suspense>

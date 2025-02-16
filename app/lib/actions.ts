@@ -12,6 +12,10 @@ import { FoodPreferencesSchema, UserSchema } from "./zod";
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/db";
 import { sortFoodData } from "@/utils/sortFoodData";
+import { getBaseUrl } from "@/utils/util-functions";
+
+const BASE_URL = getBaseUrl()
+
 
 const CreateAccount = z
 	.object({
@@ -125,13 +129,13 @@ export async function fetchFoodData(): Promise<FoodDataType> {
 		// throw new Error("Failed to fetch food data");
 		// }
 		// const data = await response.json();
-		const response = await fetch("http://localhost:3000/api/food", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(userPrefs),
-		});
+        const response = await fetch(`${BASE_URL}/api/food`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userPrefs),
+        });
 		if (!response.ok) {
 			const foodData: FoodItemType[] = generateSampleData();
 			if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
@@ -153,8 +157,9 @@ export async function fetchFoodData(): Promise<FoodDataType> {
 
 export async function generateRecipes(data: FoodDataType): Promise<GenRecipesResponse> {
     const foodData = data.foodData
+
     try {
-		const response = await fetch("http://localhost:3000/api/genRecipes", {
+		const response = await fetch(`${BASE_URL}/api/food`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
