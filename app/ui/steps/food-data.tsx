@@ -4,10 +4,12 @@ import { Button } from "@ui/custom-components";
 import { fetchFoodData } from "@/lib/actions";
 import { lusitana } from "../fonts";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { cookies } from "next/headers";
 // import { FoodItemType } from "@/lib/definitions";
 
 interface FoodDataProps {
 	isOnboarded: string;
+	userEmail: string;
 }
 
 // interface SortedFoodData {
@@ -16,11 +18,11 @@ interface FoodDataProps {
 //     message: string;
 // }
 
-export default function FoodData({ isOnboarded }: FoodDataProps) {
+export default function FoodData({ isOnboarded, userEmail }: FoodDataProps) {
 	const [data, setData] = useState<any>(null);
 	const handleFetchFood = async () => {
 		if (isOnboarded === "true") {
-			const foodData = await fetchFoodData();
+			const foodData = await fetchFoodData(userEmail);
 			setData(foodData);
 			console.log("food data: ", foodData);
 		} else alert("You haven't onboarded yet!");
