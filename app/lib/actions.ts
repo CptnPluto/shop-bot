@@ -99,7 +99,7 @@ export async function fetchFoodData(): Promise<any> {
 		const cookieStore = await cookies();
 		const userEmail = cookieStore.get("email")?.value || "";
 		const userData = await getUser(userEmail);
-        console.log("userData: ", userData);
+		console.log("userData: ", userData);
 		const rawMacroData = {
 			protein: userData?.protein,
 			fat: userData?.fat,
@@ -116,16 +116,29 @@ export async function fetchFoodData(): Promise<any> {
 			};
 		}
 
-		// perform fetch to external api WHERE matches preferencesArray
-		const foodData: FoodItemType[] = generateSampleData();
+		// combine userPrefs in order to get food data.
+		const userPrefs: any = [];
 
-		if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
+		// perform fetch to external api WHERE matches preferencesArray
 		// const response = await fetch("/api/food");
 		// if (!response.ok) {
 		// throw new Error("Failed to fetch food data");
 		// }
 		// const data = await response.json();
-		return { message: `Successfully fetched food data`, foodData: foodData, errors: {} };
+		const response = await fetch("http://localhost:3000/api/food", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(userPrefs),
+		});
+		if (!response.ok) {
+			const foodData: FoodItemType[] = generateSampleData();
+			if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
+            console.log("getting placeholder data");
+			return { message: `Failed to fetch food from api. Using placeholder data instead.`, foodData: foodData, errors: {} };
+		}
+        return (response);
 	} catch (error) {
 		console.error("Error fetching food data: ", error);
 		return { message: "Error fetching food data", errors: error };
@@ -133,16 +146,16 @@ export async function fetchFoodData(): Promise<any> {
 }
 
 export async function generateRecipes(foodData: FoodItemType[]): Promise<GenRecipesResponse> {
-    try {
-        const response = await fetch("http://localhost:3000/api/genRecipes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(foodData),
-        });
+	try {
+		const response = await fetch("http://localhost:3000/api/genRecipes", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(foodData),
+		});
 
-        if (!response.ok) {
+		if (!response.ok) {
 			return {
 				message: "Failed to generate recipes. Sending placeholder",
 				recipes: [
@@ -165,17 +178,16 @@ export async function generateRecipes(foodData: FoodItemType[]): Promise<GenReci
 							"Ingredients: broccoli, bell peppers, carrots, soy sauce, garlic, ginger. Instructions: Stir fry vegetables with garlic and ginger; add soy sauce at the end.",
 					},
 				],
-				errors: {}
-			}
-        }
+				errors: {},
+			};
+		}
 
-        const recipes = await response.json();
-        return { message: "Successfully generated recipes", recipes: recipes, errors: {} };
-    } catch (error) {
-        console.error("Error generating recipes: ", error);
-        return { message: "Error generating recipes", errors: error };
-    }
-
+		const recipes = await response.json();
+		return { message: "Successfully generated recipes", recipes: recipes, errors: {} };
+	} catch (error) {
+		console.error("Error generating recipes: ", error);
+		return { message: "Error generating recipes", errors: error };
+	}
 }
 
 // sort food data based on user preferences

@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Button } from "@ui/custom-components";
 import { fetchFoodData } from "@/lib/actions";
+import { lusitana } from "../fonts";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 // import { FoodItemType } from "@/lib/definitions";
 
 interface FoodDataProps {
@@ -20,15 +22,15 @@ export default function FoodData({ isOnboarded }: FoodDataProps) {
 		if (isOnboarded === "true") {
 			const foodData = await fetchFoodData();
 			setData(foodData);
+			console.log("food data: ", foodData);
 		} else alert("You haven't onboarded yet!");
 	};
-
 
 	return (
 		<div>
 			<Button onClick={handleFetchFood}>Fetch Food Data</Button>
 
-			<div className="relative overflow-x-auto overflow-y-auto h-[40rem] max-h-[calc(100vh-20rem)] rounded-2xl m-2 shadow-2xl">
+			<div className="relative flex flex-col overflow-x-auto overflow-y-auto h-[40rem] max-h-[calc(100vh-20rem)] rounded-2xl m-2 shadow-2xl">
 				{data && data.foodData ? (
 					<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 						<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
@@ -61,7 +63,12 @@ export default function FoodData({ isOnboarded }: FoodDataProps) {
 					<div className="flex justify-center items-center h-full">No data yet</div>
 				)}
 			</div>
-		
+			{data && (
+				<div className="flex items-center gap-2 my-5">
+					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+					<div className={`${lusitana.className}`}>{data?.message}</div>
+				</div>
+			)}
 		</div>
 	);
 }

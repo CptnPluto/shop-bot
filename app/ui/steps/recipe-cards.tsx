@@ -4,6 +4,8 @@
 import { useState, use } from "react";
 import { motion, LayoutGroup } from "motion/react";
 import type { GenRecipesResponse, RecipeType } from "@/lib/definitions";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { lusitana } from "../fonts";
 
 interface RecipeCardProps {
 	recipe: RecipeType;
@@ -61,30 +63,38 @@ export default function RecipeCardStack({
 	};
 
 	return (
-		<LayoutGroup>
-			<div className="relative h-96 w-full">
-				{recipes.map((recipe, index) => {
-					// The card's stacking offset increases for cards lower in the stack.
-					const offsetT = index * 50;
-					const offsetL = index * 2;
-					// Determine if this card is currently the "top" card.
-					const isTop = recipe.id === selectedId;
-					return (
-						<motion.div
-							key={recipe.id}
-							layout
-							className="absolute w-full"
-							style={{ top: offsetT, left: offsetL }}
-						>
-							<RecipeCard
-								recipe={recipe}
-								isTop={isTop}
-								onClick={() => handleCardClick(recipe.id)}
-							/>
-						</motion.div>
-					);
-				})}
-			</div>
-		</LayoutGroup>
+		<>
+			<LayoutGroup>
+				<div className="relative h-96 w-full">
+					{recipes.map((recipe, index) => {
+						// The card's stacking offset increases for cards lower in the stack.
+						const offsetT = index * 50;
+						const offsetL = index * 2;
+						// Determine if this card is currently the "top" card.
+						const isTop = recipe.id === selectedId;
+						return (
+							<motion.div
+								key={recipe.id}
+								layout
+								className="absolute w-full"
+								style={{ top: offsetT, left: offsetL }}
+							>
+								<RecipeCard
+									recipe={recipe}
+									isTop={isTop}
+									onClick={() => handleCardClick(recipe.id)}
+								/>
+							</motion.div>
+						);
+					})}
+				</div>
+			</LayoutGroup>
+			{rawRecipeData && (
+				<div className="flex items-center gap-2 my-5">
+					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+					<div className={`${lusitana.className}`}>{rawRecipeData?.message}</div>
+				</div>
+			)}
+		</>
 	);
 }
