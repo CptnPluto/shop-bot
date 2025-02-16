@@ -3,7 +3,7 @@ import { Button } from "@/ui/custom-components";
 import RecipeCards from "./recipe-cards";
 import Link from "next/link";
 import { Suspense } from "react";
-import { FoodDataType, GenRecipesResponse } from "@/lib/definitions";
+import { FoodDataType } from "@/lib/definitions";
 
 export default async function Page({ foodData }: { foodData: FoodDataType }) {
 	const recipeRes = generateRecipes(foodData);
