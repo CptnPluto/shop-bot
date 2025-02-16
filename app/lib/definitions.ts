@@ -82,7 +82,9 @@ export type RecipeType = {
 };
 
 export type GenRecipesResponse = {
+    pending?: any;
     message?: string;
     recipes?: RecipeType[];
     errors: any;
+    step: number;
 }

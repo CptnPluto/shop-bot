@@ -10,16 +10,19 @@ export default async function Page() {
 	console.log("isOnboarded: ", isOnboarded);
 
 	return (
-		<main className="text-2xl">
-			<div id="apis" className="flex flex-col justify-center gap-2">
-				<h1 className={`${lusitana.className} `}>API&apos;s</h1>
+		<main className="text-2xl h-full">
+			<div className="flex flex-col justify-center items-center h-full gap-2">
+				<h1 className={`${lusitana.className} `}>Home Page</h1>
 
 				{/* Step 1: Onboard User */}
 				{isOnboarded === "true" ? (
-					<div>
-						<p>You&apos;re ready to start ordering!</p>
+					<div className="grow flex flex-col gap-2 items-center justify-center">
+						<p className="text-center">You&apos;re ready to start ordering!</p>
 						<Button>
-							<Link href="/step-2">Generate Food Data</Link>
+							<Link href="/step-2">TEST : Generate Food Data</Link>
+						</Button>
+						<Button>
+							<Link href="/run-shopbot">Generate Food Data</Link>
 						</Button>
 					</div>
 				) : (

@@ -5,8 +5,8 @@ import { useState, use } from "react";
 import { motion, LayoutGroup } from "motion/react";
 import type { GenRecipesResponse, RecipeType } from "@/lib/definitions";
 import { CheckBadgeIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
-import { lusitana } from "../fonts";
-import { Button } from "../custom-components";
+import { lusitana } from "@ui/fonts";
+import { Button } from "@ui/custom-components";
 import Link from "next/link";
 
 interface RecipeCardProps {
@@ -39,11 +39,13 @@ const RecipeCard = ({ recipe, isTop, onClick }: RecipeCardProps) => {
 	);
 };
 
-export default function RecipeCardStack({
+export default function RecipesRoot({
 	genRecipeResponse,
 }: {
 	genRecipeResponse: Promise<GenRecipesResponse>;
 }) {
+	console.log("In RecipesRoot");
+	console.log("props: ", genRecipeResponse);
 	const rawRecipeData = use(genRecipeResponse);
 	const [recipes, setRecipes] = useState<RecipeType[]>(rawRecipeData.recipes || []);
 
@@ -97,7 +99,7 @@ export default function RecipeCardStack({
 					<CheckBadgeIcon /> Confirm Order
 				</Button>
 			</Link>
-            
+
 			{rawRecipeData && (
 				<div className="flex items-center gap-2 my-5">
 					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />

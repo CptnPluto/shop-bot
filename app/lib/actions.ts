@@ -7,7 +7,7 @@ import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import { generateSampleData } from "@/utils/placeholder-data";
-import { FoodItemType, GenRecipesResponse, SignupState, User } from "./definitions";
+import { FoodDataType, FoodItemType, GenRecipesResponse, SignupState, User } from "./definitions";
 import { FoodPreferencesSchema, UserSchema } from "./zod";
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/db";
@@ -93,7 +93,7 @@ export async function updateUser(userData: User): Promise<any> {
 	}
 }
 
-export async function fetchFoodData(): Promise<any> {
+export async function fetchFoodData(): Promise<FoodDataType> {
 	try {
 		// load user preferencesArray
 		const cookieStore = await cookies();
@@ -135,18 +135,25 @@ export async function fetchFoodData(): Promise<any> {
 		if (!response.ok) {
 			const foodData: FoodItemType[] = generateSampleData();
 			if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
-            console.log("getting placeholder data");
-			return { message: `Failed to fetch food from api. Using placeholder data instead.`, foodData: foodData, errors: {} };
+			console.log("getting placeholder data");
+			return {
+				message: `Failed to fetch food from api. Using placeholder data instead.`,
+				foodData: foodData,
+				errors: {},
+			};
 		}
-        return (response);
+		return {
+			message: "Something went wrong",
+		};
 	} catch (error) {
 		console.error("Error fetching food data: ", error);
 		return { message: "Error fetching food data", errors: error };
 	}
 }
 
-export async function generateRecipes(foodData: FoodItemType[]): Promise<GenRecipesResponse> {
-	try {
+export async function generateRecipes(data: FoodDataType): Promise<GenRecipesResponse> {
+    const foodData = data.foodData
+    try {
 		const response = await fetch("http://localhost:3000/api/genRecipes", {
 			method: "POST",
 			headers: {
@@ -179,15 +186,26 @@ export async function generateRecipes(foodData: FoodItemType[]): Promise<GenReci
 					},
 				],
 				errors: {},
+				step: 3,
 			};
 		}
 
 		const recipes = await response.json();
-		return { message: "Successfully generated recipes", recipes: recipes, errors: {} };
+		return { message: "Successfully generated recipes", recipes: recipes, errors: {}, step: 3 };
 	} catch (error) {
 		console.error("Error generating recipes: ", error);
-		return { message: "Error generating recipes", errors: error };
+		return { message: "Error generating recipes", errors: error, step: 3 };
 	}
+}
+
+export async function addToCart(recipes: any) {
+	return { message: "Adding to cart.", content: recipes, step: 4 };
+}
+export async function placeOrder(cart: any) {
+	return { message: "Placing Order.", content: cart, step: 5 };
+}
+export async function review(orderConf: any) {
+	return { message: "Submitting for review.", content: orderConf, step: 6 };
 }
 
 // sort food data based on user preferences
