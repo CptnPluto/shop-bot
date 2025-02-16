@@ -209,7 +209,7 @@ export async function placeOrder(cart: any) {
 export async function getOrderById(orderNum: any) {
 	const orderReceipt = await sql`
         SELECT * FROM orderConf
-        WHERE id=orderNum;
+        WHERE id=${orderNum};
     `;
 	return { message: "Submitting for review.", content: orderReceipt, step: 6 };
 }
