@@ -1,4 +1,3 @@
-// app/components/RecipeCardStack.tsx
 "use client";
 
 import { useState, use } from "react";
@@ -45,11 +44,18 @@ export default function RecipeCardStack({
 	genRecipeResponse: Promise<GenRecipesResponse>;
 }) {
 	const rawRecipeData = use(genRecipeResponse);
-	const [recipes, setRecipes] = useState<RecipeType[]>(rawRecipeData.recipes || []);
+	const recipeList = rawRecipeData.recipes || [];
+	const [recipes, setRecipes] = useState<RecipeType[]>(recipeList);
 
 	// Track the currently selected (top) card
-	const [selectedId, setSelectedId] = useState<number>(recipes[recipes.length - 1].id);
-
+    
+	const [selectedId, setSelectedId] = useState<number | null>(
+        recipeList.length > 0 ? recipeList[recipeList.length - 1].id : null
+	);
+    
+    if (recipes.length === 0) {
+        return <div>No recipes available</div>;
+    }
 	// When a card is clicked, reorder so that the selected card moves to the top
 	const handleCardClick = (id: number) => {
 		setSelectedId(id);
@@ -97,7 +103,7 @@ export default function RecipeCardStack({
 					<CheckBadgeIcon /> Confirm Order
 				</Button>
 			</Link>
-            
+
 			{rawRecipeData && (
 				<div className="flex items-center gap-2 my-5">
 					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
