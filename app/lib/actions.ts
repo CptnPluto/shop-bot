@@ -203,10 +203,15 @@ export async function addToCart(recipes: any) {
 	return { message: "Adding to cart.", content: recipes, step: 4 };
 }
 export async function placeOrder(cart: any) {
+	redirect("/review");
 	return { message: "Placing Order.", content: cart, step: 5 };
 }
-export async function review(orderConf: any) {
-	return { message: "Submitting for review.", content: orderConf, step: 6 };
+export async function getOrderById(orderNum: any) {
+	const orderReceipt = await sql`
+        SELECT * FROM orderConf
+        WHERE id=orderNum;
+    `;
+	return { message: "Submitting for review.", content: orderReceipt, step: 6 };
 }
 
 // sort food data based on user preferences

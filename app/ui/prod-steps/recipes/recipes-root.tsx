@@ -15,7 +15,7 @@ export default async function Page({ foodData }: { foodData: FoodDataType }) {
 				<RecipeCards genRecipeResponse={recipeRes} />
 			</Suspense>
 			<Button>
-				<Link href="/step-4">Fill Cart</Link>
+				<Link href="/addToCart">Fill Cart</Link>
 			</Button>
 		</main>
 	);

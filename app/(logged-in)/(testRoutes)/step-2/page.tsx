@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 export default async function Page() {
 	const cookieStore = await cookies();
 	const isOnboarded = cookieStore.get("onboarded")?.value || "false";
-    const userEmail = cookieStore.get("email")?.value || ""
+	const userEmail = cookieStore.get("email")?.value || "";
 
 	return (
 		<main>
