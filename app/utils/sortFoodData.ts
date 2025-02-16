@@ -8,11 +8,8 @@ export function sortFoodData(nutritionals: string, foodData: FoodItemType[]): vo
 			key.toLowerCase().includes(nutritionals.toLowerCase())
 		);
 		if (matchingKey && foodData[readIndex][matchingKey as keyof FoodItemType] === true) {
-			console.log("Found one.");
 			foodData[writeIndex] = foodData[readIndex];
 			writeIndex++;
-		} else {
-			console.log(`Item is not ${nutritionals}: ${foodData[readIndex].itemName}`);
 		}
 	}
 	foodData.length = writeIndex;

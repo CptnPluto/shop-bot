@@ -74,3 +74,15 @@ export type FoodPreferencesType = {
 	fat: number;
 	nutritionals: string;
 };
+
+export type RecipeType = {
+    id: number;
+    title: string;
+    content: string;
+};
+
+export type GenRecipesResponse = {
+    message?: string;
+    recipes?: RecipeType[];
+    errors: any;
+}

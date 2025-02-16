@@ -7,7 +7,7 @@ import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import { generateSampleData } from "@/utils/placeholder-data";
-import { FoodItemType, SignupState, User } from "./definitions";
+import { FoodItemType, GenRecipesResponse, SignupState, User } from "./definitions";
 import { FoodPreferencesSchema, UserSchema } from "./zod";
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/db";
@@ -130,6 +130,52 @@ export async function fetchFoodData(): Promise<any> {
 		console.error("Error fetching food data: ", error);
 		return { message: "Error fetching food data", errors: error };
 	}
+}
+
+export async function generateRecipes(foodData: FoodItemType[]): Promise<GenRecipesResponse> {
+    try {
+        const response = await fetch("http://localhost:3000/api/genRecipes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(foodData),
+        });
+
+        if (!response.ok) {
+			return {
+				message: "Failed to generate recipes. Sending placeholder",
+				recipes: [
+					{
+						id: 1,
+						title: "Spaghetti Bolognese",
+						content:
+							"Ingredients: spaghetti, ground beef, tomato sauce, garlic, herbs. Instructions: Cook spaghetti; simmer beef in tomato sauce with garlic and herbs; combine and serve hot.",
+					},
+					{
+						id: 2,
+						title: "Chicken Salad",
+						content:
+							"Ingredients: grilled chicken, mixed greens, cherry tomatoes, cucumbers, vinaigrette. Instructions: Toss ingredients together and drizzle with vinaigrette.",
+					},
+					{
+						id: 3,
+						title: "Vegetable Stir Fry",
+						content:
+							"Ingredients: broccoli, bell peppers, carrots, soy sauce, garlic, ginger. Instructions: Stir fry vegetables with garlic and ginger; add soy sauce at the end.",
+					},
+				],
+				errors: {}
+			}
+        }
+
+        const recipes = await response.json();
+        return { message: "Successfully generated recipes", recipes: recipes, errors: {} };
+    } catch (error) {
+        console.error("Error generating recipes: ", error);
+        return { message: "Error generating recipes", errors: error };
+    }
+
 }
 
 // sort food data based on user preferences

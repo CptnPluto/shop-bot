@@ -19,7 +19,6 @@ export default function FoodData({ isOnboarded }: FoodDataProps) {
 	const handleFetchFood = async () => {
 		if (isOnboarded === "true") {
 			const foodData = await fetchFoodData();
-			console.log("foodData: ", foodData);
 			setData(foodData);
 		} else alert("You haven't onboarded yet!");
 	};

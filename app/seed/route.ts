@@ -159,13 +159,13 @@ export async function GET() {
 	//       'Database already seeded. Use this file if you want to try other seeding things.',
 	//   });
 	try {
-		await client.sql`BEGIN`;
+		// await client.sql`BEGIN`;
 		// await seedUsers();
 		await updateUsers();
 		//     await seedCustomers();
 		//     await seedInvoices();
 		//     await seedRevenue();
-		await client.sql`COMMIT`;
+		// await client.sql`COMMIT`;
 
 		return Response.json({ message: "Database seeded successfully" });
 	} catch (error) {
