@@ -7,12 +7,11 @@ import { AuthError } from "next-auth";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import { generateSampleData } from "@/utils/placeholder-data";
-import { FoodDataType, FoodItemType, SignupState, User } from "./definitions";
+import { FoodItemType, SignupState, User } from "./definitions";
 import { FoodPreferencesSchema, UserSchema } from "./zod";
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/db";
 import { sortFoodData } from "@/utils/sortFoodData";
-import { Nutritionals } from "@/ui/signup/account-details";
 
 const CreateAccount = z
 	.object({
@@ -118,8 +117,7 @@ export async function fetchFoodData(): Promise<any> {
 		}
 
 		// perform fetch to external api WHERE matches preferencesArray
-		let foodData: FoodItemType[] = generateSampleData();
-		console.log("Fetching food data: ", foodData[0]);
+		const foodData: FoodItemType[] = generateSampleData();
 
 		if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
 		// const response = await fetch("/api/food");

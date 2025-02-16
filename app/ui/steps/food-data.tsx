@@ -2,18 +2,17 @@
 import { useState } from "react";
 import { Button } from "@ui/custom-components";
 import { fetchFoodData } from "@/lib/actions";
-import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
-import { FoodItemType } from "@/lib/definitions";
+// import { FoodItemType } from "@/lib/definitions";
 
 interface FoodDataProps {
 	isOnboarded: string;
 }
 
-interface SortedFoodData {
-    foodData: FoodItemType;
-    errors: any;
-    message: string;
-}
+// interface SortedFoodData {
+//     foodData: FoodItemType;
+//     errors: any;
+//     message: string;
+// }
 
 export default function FoodData({ isOnboarded }: FoodDataProps) {
 	const [data, setData] = useState<any>(null);
