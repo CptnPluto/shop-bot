@@ -9,13 +9,11 @@ import bcrypt from "bcrypt";
 import { generateSampleData } from "@/utils/placeholder-data";
 import { FoodDataType, FoodItemType, GenRecipesResponse, SignupState, User } from "./definitions";
 import { FoodPreferencesSchema, UserSchema } from "./zod";
-import { cookies } from "next/headers";
 import { getUser } from "@/utils/db";
 import { sortFoodData } from "@/utils/sortFoodData";
 import { getBaseUrl } from "@/utils/util-functions";
 
-const BASE_URL = getBaseUrl()
-
+const BASE_URL = getBaseUrl();
 
 const CreateAccount = z
 	.object({
@@ -97,11 +95,9 @@ export async function updateUser(userData: User): Promise<any> {
 	}
 }
 
-export async function fetchFoodData(): Promise<FoodDataType> {
+export async function fetchFoodData(userEmail: string): Promise<FoodDataType> {
 	try {
 		// load user preferencesArray
-		const cookieStore = await cookies();
-		const userEmail = cookieStore.get("email")?.value || "";
 		const userData = await getUser(userEmail);
 		console.log("userData: ", userData);
 		const rawMacroData = {
@@ -129,13 +125,13 @@ export async function fetchFoodData(): Promise<FoodDataType> {
 		// throw new Error("Failed to fetch food data");
 		// }
 		// const data = await response.json();
-        const response = await fetch(`${BASE_URL}/api/food`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userPrefs),
-        });
+		const response = await fetch(`${BASE_URL}/api/food`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(userPrefs),
+		});
 		if (!response.ok) {
 			const foodData: FoodItemType[] = generateSampleData();
 			if (userData?.nutritionals) sortFoodData(userData?.nutritionals, foodData);
@@ -156,9 +152,9 @@ export async function fetchFoodData(): Promise<FoodDataType> {
 }
 
 export async function generateRecipes(data: FoodDataType): Promise<GenRecipesResponse> {
-    const foodData = data.foodData || []
+	const foodData = data.foodData || [];
 
-    try {
+	try {
 		const response = await fetch(`${BASE_URL}/api/food`, {
 			method: "POST",
 			headers: {
