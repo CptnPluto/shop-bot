@@ -16,7 +16,7 @@ const initialState: SignupState = {
 
 export default function SignupForm() {
 	const searchParams = useSearchParams();
-	const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+	const callbackUrl = searchParams.get("callbackUrl") || "/home";
 	const [state, formAction, isPending] = useActionState(signup, initialState);
 
 	return (
