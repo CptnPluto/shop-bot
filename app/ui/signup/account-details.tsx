@@ -2,7 +2,7 @@
 import React from "react";
 import { useActionState } from "react";
 import clsx from "clsx";
-import { signup } from "@/lib/actions";
+import { updateUser } from "@/lib/actions";
 import { Button, Label, Input } from "@ui/custom-components";
 import type { UserOnboarding } from "@/lib/definitions";
 
@@ -102,13 +102,13 @@ export const Submit = () => {
 	return <Button type="submit">Submit</Button>;
 };
 
-export default function SignupForm() {
+export default function DetailsForm() {
 	const initialState = {
 		message: null,
 		errors: {},
 	};
 
-	const [state, formAction] = useActionState(signup, initialState);
+	const [state, formAction] = useActionState(updateUser, initialState);
 
 	const slides = [
 		// <Info key="info" formData={state.formData} />,
@@ -144,13 +144,13 @@ export default function SignupForm() {
 
 	return (
 		<form
-			className="flex flex-col relative w-full max-w-md mx-auto overflow-hidden"
+			className="flex flex-col relative w-full max-w-md overflow-hidden"
 			action={formAction}
 			data-move="0"
 		>
 			<div className="w-full h-full flex transition-transform duration-300 signup-nav">
 				{slides.map((slide, index) => (
-					<div key={index} className="w-full shrink-0 flex flex-col justify-between">
+					<div key={index} className="w-full p-2 shrink-0 flex flex-col justify-between">
 						{slide}
 						<div className="flex justify-between mt-4">
 							<Button

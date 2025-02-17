@@ -76,7 +76,7 @@ export async function updateUser(userData: User): Promise<any> {
 	if (!validatedFields.success) {
 		return {
 			errors: validatedFields.error.flatten().fieldErrors,
-			message: "Missing fields. Failed to create invoice.",
+			message: "Missing fields. Failed to complete onboarding.",
 		};
 	}
 	try {
