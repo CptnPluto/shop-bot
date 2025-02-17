@@ -12,6 +12,7 @@ const validPaths = [
 	"/run-shopbot",
 	"/add-to-cart",
 	"/review",
+    "/onboarding",
 ];
 export const authConfig = {
 	pages: {
@@ -33,6 +34,7 @@ export const authConfig = {
 				"/run-shopbot",
 				"/add-to-cart",
 				"/review*", // changed from '/review/path*'
+                "/onboarding",
 			];
 			console.log("nextUrl.pathname: ", path);
 			const isValidRoute = validRoutes.some((route) => matchPath(path, route));
