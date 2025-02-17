@@ -1,7 +1,7 @@
 import { generateRecipes } from "@/lib/actions";
 import { FoodDataType } from "@/lib/definitions";
 import { Button } from "@/ui/custom-components";
-import RecipeCards from "@/ui/steps/recipe-cards";
+import RecipeCards from "@/ui/test-steps/recipe-cards";
 import Link from "next/link";
 import { Suspense } from "react";
 

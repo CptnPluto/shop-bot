@@ -1,5 +1,5 @@
 import { Button } from "@/ui/custom-components";
-import OrderConf from "@/ui/steps/order-conf";
+import OrderConf from "@/ui/test-steps/order-conf";
 import Link from "next/link";
 import { Suspense } from "react";
 

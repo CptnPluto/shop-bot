@@ -1,5 +1,5 @@
 import { Button } from "@/ui/custom-components";
-import FoodData from "@/ui/steps/food-data";
+import FoodData from "@/ui/test-steps/food-data";
 import Link from "next/link";
 import { Suspense } from "react";
 import { cookies } from "next/headers";
