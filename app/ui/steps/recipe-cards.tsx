@@ -98,7 +98,7 @@ export default function RecipeCardStack({
 				</div>
 			</LayoutGroup>
 
-			<Link href="/order">
+			<Link href="/add-to-cart">
 				<Button>
 					<CheckBadgeIcon /> Confirm Order
 				</Button>
