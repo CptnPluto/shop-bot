@@ -200,18 +200,54 @@ export async function generateRecipes(data: FoodDataType): Promise<GenRecipesRes
 }
 
 export async function addToCart(recipes: any) {
-	return { message: "Adding to cart.", content: recipes, step: 4 };
+	const products = recipes.flatMap((recipe: any) => recipe.items);
+	return { message: "Adding to cart.", items: products };
+}
+
+async function orderFromService(service: string, cart: any) {
+	switch (service) {
+		case "INSTACART":
+			console.log("Ordering from Instacart");
+			console.log(cart);
+			// Add logic for ordering from Instacart
+			break;
+		case "WOLT":
+			console.log("Ordering from Wolt");
+			// Add logic for ordering from Wolt
+			break;
+		default:
+			console.log("Ordering from default service");
+			// Add logic for ordering from default service
+			break;
+	}
+	return { success: true, orderId: 1 };
 }
 export async function placeOrder(cart: any) {
-	redirect("/review");
-	return { message: "Placing Order.", content: cart, step: 5 };
+    let returnedOrderId = null;
+	try {
+		const { orderId } = await orderFromService("INSTACART", cart);
+        returnedOrderId = orderId
+        console.log("orderId: ", orderId)
+	} catch (error) {
+        console.log("Error placing order: ", error);
+	}
+    redirect(`/review/${returnedOrderId}`);
 }
-export async function getOrderById(orderNum: any) {
-	const orderReceipt = await sql`
+export async function getOrder(orderId: number) {
+	try {
+		const res = await sql`
         SELECT * FROM orderConf
-        WHERE id=${orderNum};
+        WHERE id=${orderId};
     `;
-	return { message: "Submitting for review.", content: orderReceipt, step: 6 };
+		const orderReceipt = res.rows[0];
+		return { message: "Submitting for review.", content: orderReceipt };
+	} catch (error) {
+		console.log("Error fetching order receipt from db:", error);
+		return {
+			message: "Error fetching receipt",
+			content: { orderId: 1, content: "sample order receipt" },
+		};
+	}
 }
 
 // sort food data based on user preferences

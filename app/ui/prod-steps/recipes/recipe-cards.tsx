@@ -39,7 +39,7 @@ const RecipeCard = ({ recipe, isTop, onClick }: RecipeCardProps) => {
 	);
 };
 
-export default function RecipesRoot({
+export default function RecipeCards({
 	genRecipeResponse,
 }: {
 	genRecipeResponse: Promise<GenRecipesResponse>;
@@ -94,7 +94,7 @@ export default function RecipesRoot({
 				</div>
 			</LayoutGroup>
 
-			<Link href="/order">
+			<Link href="/add-to-cart">
 				<Button>
 					<CheckBadgeIcon /> Confirm Order
 				</Button>

@@ -1,11 +1,10 @@
+
 import { generateRecipes } from "@/lib/actions";
-import { Button } from "@/ui/custom-components";
 import RecipeCards from "./recipe-cards";
-import Link from "next/link";
 import { Suspense } from "react";
 import { FoodDataType } from "@/lib/definitions";
 
-export default async function Page({ foodData }: { foodData: FoodDataType }) {
+export default async function RecipesRoot({ foodData }: { foodData: FoodDataType }) {
 	const recipeRes = generateRecipes(foodData);
 
 	return (
@@ -14,9 +13,7 @@ export default async function Page({ foodData }: { foodData: FoodDataType }) {
 			<Suspense fallback={<div>Loading...</div>}>
 				<RecipeCards genRecipeResponse={recipeRes} />
 			</Suspense>
-			<Button>
-				<Link href="/addToCart">Fill Cart</Link>
-			</Button>
+			
 		</main>
 	);
 }

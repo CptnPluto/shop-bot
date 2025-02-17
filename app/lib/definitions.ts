@@ -76,15 +76,30 @@ export type FoodPreferencesType = {
 };
 
 export type RecipeType = {
-    id: number;
-    title: string;
-    content: string;
+	id: number;
+	title: string;
+	content: string;
 };
 
 export type GenRecipesResponse = {
-    pending?: any;
-    message?: string;
-    recipes?: RecipeType[];
-    errors: any;
-    step: number;
+	pending?: any;
+	message?: string;
+	recipes?: RecipeType[];
+	errors: any;
+	step: number;
+};
+
+type OrderReceipt = {
+	total?: number;
+	orderId?: number;
+};
+export type OrderReceiptType = {
+	content: OrderReceipt;
+	errors?: any;
+	message?: string;
+} | null;
+
+export type CartType = {
+    message: string;
+    items: FoodItemType[];
 }

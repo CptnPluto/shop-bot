@@ -1,21 +1,29 @@
-'use-client'
+"use client";
 
 import { placeOrder } from "@/lib/actions";
-import { Suspense } from "react";
-import OrderConfLoader from "../prod-loaders/orderConf-loader";
-import OrderConf from "./order-conf";
+import { useActionState } from "react";
 import { Button } from "../custom-components";
+import { CartType, OrderReceiptType } from "@/lib/definitions";
 
-export default async function Cart(cart: any) {
-	const order = await placeOrder(cart);
-    const handleClick = async() => {
-        const order = await placeOrder(cart)
-    }
+export default function Cart({ cart }: { cart: CartType }) {
+	const initialState: OrderReceiptType = null;
+	const [state, formAction] = useActionState(placeOrder, initialState);
+    console.log("state: ", state);
 
 	return (
-		<Suspense fallback={<OrderConfLoader />} >
-            <Button onClick={handleClick}>Place Order</Button>
-            <OrderConf order={order.content}/>
-        </Suspense>
+		<main>
+			<div id="cart">
+				{cart &&
+					cart.items.map((item) => (
+						<div key={item.itemName}>
+							<div>{item.itemName}</div>
+							<div>{item.price}</div>
+						</div>
+					))}
+			</div>
+			<form action={formAction}>
+				<Button type="submit">Place Order</Button>
+			</form>
+		</main>
 	);
 }
