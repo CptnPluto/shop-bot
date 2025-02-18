@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { Input, Button } from "../custom-components";
 
 export default function RegistrationForm() {
 	// Define state variables similar to the Alpine app() object.
@@ -41,7 +42,7 @@ export default function RegistrationForm() {
 		checkPasswordStrength(value);
 	};
 
-	// File input handler for the profile picture.
+	// File Input handler for the profile picture.
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files && e.target.files[0];
 		if (file) {
@@ -78,12 +79,12 @@ export default function RegistrationForm() {
 						Thank you. We have sent you an email to {email || "demo@demo.test"}. Please
 						click the link in the message to activate your account.
 					</div>
-					<button
+					<Button
 						onClick={() => setStep(1)}
 						className="w-40 block mx-auto focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border"
 					>
 						Back to home
-					</button>
+					</Button>
 				</div>
 			</div>
 		);
@@ -176,7 +177,7 @@ export default function RegistrationForm() {
 								<div className="mx-auto w-48 text-gray-500 text-xs text-center mt-1">
 									Click to add profile picture
 								</div>
-								<input
+								<Input
 									name="photo"
 									id="fileInput"
 									accept="image/*"
@@ -193,7 +194,7 @@ export default function RegistrationForm() {
 								>
 									Firstname
 								</label>
-								<input
+								<Input
 									type="text"
 									id="firstname"
 									className="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
@@ -210,7 +211,7 @@ export default function RegistrationForm() {
 								>
 									Email
 								</label>
-								<input
+								<Input
 									type="email"
 									id="email"
 									className="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
@@ -242,7 +243,7 @@ export default function RegistrationForm() {
 									</ul>
 								</div>
 								<div className="relative">
-									<input
+									<Input
 										type={togglePassword ? "text" : "password"}
 										id="password"
 										className="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
@@ -332,7 +333,7 @@ export default function RegistrationForm() {
 								<div className="flex">
 									<label className="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm mr-4">
 										<div className="text-teal-600 mr-3">
-											<input
+											<Input
 												type="radio"
 												name="gender"
 												value="Male"
@@ -345,7 +346,7 @@ export default function RegistrationForm() {
 									</label>
 									<label className="flex justify-start items-center text-truncate rounded-lg bg-white pl-4 pr-6 py-3 shadow-sm">
 										<div className="text-teal-600 mr-3">
-											<input
+											<Input
 												type="radio"
 												name="gender"
 												value="Female"
@@ -365,7 +366,7 @@ export default function RegistrationForm() {
 								>
 									Profession
 								</label>
-								<input
+								<Input
 									type="text"
 									id="profession"
 									className="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
@@ -385,34 +386,34 @@ export default function RegistrationForm() {
 					<div className="flex justify-between">
 						<div className="w-1/2">
 							{step > 1 && (
-								<button
+								<Button
 									onClick={() =>
 										setStep((prev) => (typeof prev === "number" ? prev - 1 : 1))
 									}
 									className="w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center text-gray-600 bg-white hover:bg-gray-100 font-medium border"
 								>
 									Previous
-								</button>
+								</Button>
 							)}
 						</div>
 						<div className="w-1/2 text-right">
 							{step < 3 && (
-								<button
+								<Button
 									onClick={() =>
 										setStep((prev) => (typeof prev === "number" ? prev + 1 : 3))
 									}
 									className="w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium"
 								>
 									Next
-								</button>
+								</Button>
 							)}
 							{step === 3 && (
-								<button
+								<Button
 									onClick={() => setStep("complete")}
 									className="w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-blue-500 hover:bg-blue-600 font-medium"
 								>
 									Complete
-								</button>
+								</Button>
 							)}
 						</div>
 					</div>
