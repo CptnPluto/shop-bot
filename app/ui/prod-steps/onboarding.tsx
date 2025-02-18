@@ -1,5 +1,5 @@
 // import DetailsForm from "../signup/account-details";
-import OnboardingForm from "../signup/OnboardingForm";
+import OnboardingForm from "../signup/OnboardingForm/OnboardingForm";
 
 export default function Onboarding() {
 	return (
