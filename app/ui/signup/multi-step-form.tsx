@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 export default function RegistrationForm() {
 	// Define state variables similar to the Alpine app() object.
@@ -139,7 +140,7 @@ export default function RegistrationForm() {
 						<div>
 							<div className="mb-5 text-center">
 								<div className="mx-auto w-32 h-32 border rounded-full relative bg-gray-100 mb-4 shadow-inner">
-									<img
+									<Image
 										id="image"
 										className="object-cover w-full h-32 rounded-full"
 										src={image}
