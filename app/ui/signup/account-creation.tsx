@@ -8,6 +8,7 @@ import { lusitana } from "@ui/fonts";
 import { Button } from "@ui/custom-components";
 import { signup } from "@/lib/actions";
 import { SignupState } from "@/lib/definitions";
+import Link from "next/link";
 
 const initialState: SignupState = {
 	errors: {},
@@ -145,6 +146,7 @@ export default function SignupForm() {
 						Sign up <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
 					</Button>
 				</div>
+                <Link href="../">Back</Link>
 				<div className="flex h-8 items-end space-x-1">
 					{state.errors?.status &&
 						state.errors.status.map((error: string) => (
