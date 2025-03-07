@@ -6,9 +6,10 @@ export default function Onboarding() {
 	return (
 		<main className="h-full flex flex-col items-center justify-center">
 			<div>Onboarding</div>
-            <SignupForm />
+			<SignupForm />
 			<Button>
 				<Link href="/step-2">Generate Food Data</Link>
+				<Link href="../">Back</Link>
 			</Button>
 		</main>
 	);
